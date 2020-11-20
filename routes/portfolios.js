@@ -1,6 +1,6 @@
 const express = require("express");
+const { checkJwt } = require("../controllers/auth");
 const router = express.Router();
-// const {} = require('../controllers/auth');
 const {
   getPortfolios,
   getPortfolioById,
@@ -12,7 +12,7 @@ const {
 router.get("", getPortfolios);
 router.get("/:id", getPortfolioById);
 
-router.post("", createPortfolio);
+router.post("", checkJwt ,createPortfolio);
 router.patch("/:id", updatePortfolio);
 router.delete("/:id", deletePortfolio);
 // router.delete('/:id', checkJwt, checkRole('admin'), deletePortfolio);

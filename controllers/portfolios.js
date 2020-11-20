@@ -1,4 +1,4 @@
-const mongoose = require(mongoose);
+const mongoose = require('mongoose');
 const Portfolio = mongoose.model('Portfolio');
 
 exports.getPortfolios = async (req,res) => {
@@ -17,7 +17,7 @@ exports.getPortfolioById = async (req,res) => {
 
 exports.createPortfolio = async (req,res) => {
   const portfolioData = req.body;
-  const userId = req.user.sub;
+  const userId = 'google-oauth2|108494013925670824047';
   const portfolio = new Portfolio(portfolioData);
   portfolio.userId = userId;
 
