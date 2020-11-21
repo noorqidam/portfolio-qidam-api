@@ -29,7 +29,7 @@ exports.createPortfolio = async (req,res) => {
   }
 }
 
-exports.updatedPortfolio = async (req,res) => {
+exports.updatePortfolio = async (req,res) => {
   const {body, params: {id}} = req
   try {
     const updatedPortfolio = await Portfolio.findOneAndUpdate({_id: id}, body, {new: true, runValidators: true})
