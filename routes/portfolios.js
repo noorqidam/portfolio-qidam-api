@@ -13,7 +13,7 @@ router.get("", getPortfolios);
 router.get("/:id", getPortfolioById);
 
 router.post("", checkJwt ,createPortfolio);
-router.patch("/:id", updatePortfolio);
+router.patch("/:id", checkJwt, updatePortfolio);
 router.delete("/:id", deletePortfolio);
 // router.delete('/:id', checkJwt, checkRole('admin'), deletePortfolio);
 
