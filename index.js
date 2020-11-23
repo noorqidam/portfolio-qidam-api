@@ -6,14 +6,12 @@ async function runServer() {
   await require('./db/').connect()
 
   server.use(bodyParser.json());
-  const portfolioRoutes = require("./routes/portfolios");
+  server.use("api/v1/portfolios", require("./routes/portfolios"));
+  server.use("api/v1/blogs", require("./routes/blogs"));
   
   server.get("/test", (req, res) => {
-    return res.json({ message: "test is working!" });
+    res.json({ message: "test is working!" });
   });
-  
-  server.use("/api/v1/portfolios", portfolioRoutes);
-  // GET ENDPOINT /api/v1/portfolios -> [1,2,3]
   
   const PORT = parseInt(process.env.PORT, 10) || 3001;
   server.listen(PORT, (err) => {

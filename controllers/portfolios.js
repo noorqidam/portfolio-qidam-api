@@ -50,7 +50,7 @@ exports.updatePortfolio = async (req, res) => {
   }
 }
 
-exports.deletePortfolio = async (req,res) => {
+exports.deletePortfolio = async (req, res) => {
   const portfolio = await Portfolio.findOneAndRemove({_id: req.params.id});
   return res.json({_id: portfolio.id})
 }
