@@ -1,6 +1,6 @@
 const express = require("express");
-const { checkJwt, checkRole } = require("../controllers/auth");
 const router = express.Router();
+const { checkJwt, checkRole } = require("../controllers/auth");
 const {
   getPortfolios,
   getPortfolioById,
