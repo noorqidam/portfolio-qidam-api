@@ -2,12 +2,23 @@ const mongoose = require("mongoose");
 const slugify = require("slugify");
 const uniqueSlug = require("unique-slug");
 const Blog = mongoose.model("Blog");
+const { getAccessToken, getAuth0User } = require("./auth");
 
 exports.getBlogs = async (req, res) => {
   const blogs = await Blog.find({ status: "published" }).sort({
     createdAt: -1,
   });
-  return res.json(blogs);
+  const { access_token } = await getAccessToken();
+  const blogsWithUsers = [];
+  const authors= {};
+
+  for (let blog of blogs) {
+    const author = authors[blog.userId] || await getAuth0User(access_token)(blog.userId);
+    authors[author.user_id] = author;
+    blogsWithUsers.push({blog, author})
+  }
+
+  return res.json(blogsWithUsers);
 };
 
 exports.getBlogsByUser = async (req, res) => {
@@ -26,7 +37,10 @@ exports.getBlogById = async (req, res) => {
 
 exports.getBlogBySlug = async (req, res) => {
   const blog = await Blog.findOne({ slug: req.params.slug });
-  return res.json(blog);
+  const { access_token } = await getAccessToken();
+  const author = await getAuth0User(access_token)(blog.userId)
+  
+  return res.json({blog, author});
 };
 
 exports.createBlog = async (req, res) => {
